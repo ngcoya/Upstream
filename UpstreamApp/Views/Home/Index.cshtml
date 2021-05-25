@@ -1,0 +1,147 @@
+﻿@using UpstreamApp.Models
+@model UpstreamApp.Models.ClientsViewModel
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Enter new client</h2>
+@using (Html.BeginForm("Submit", "Home", FormMethod.Post))
+{
+
+    <input type="submit" />
+}
+
+<script>
+                            function disablePostalAddress() {
+                                var x = document.getElementById("PostalAddress");
+                                if (x.style.display === "none") {
+                                    x.style.display = "block";
+                                } else {
+
+                                    x.style.display = "none";
+                                }
+                            }
+
+
+                            function disableWorkAddress() {
+                                var x = document.getElementById("WorkAddress");
+                                if (x.style.display === "none") {
+                                    x.style.display = "block";
+                                } else {
+
+                                    x.style.display = "none";
+                                }
+                            }
+</script>
+
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+  
+            <div class="form-group">
+                <div>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Name" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    @Html.TextBoxFor(m => m.Surname, new { @class = "form-control", placeholder = "Surname" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                   @Html.DropDownListFor(m => m.Gender , new SelectList(Enum.GetValues(typeof(Gender))),"Select Gender")
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    @Html.TextBoxFor(m => m.WorkNumber, new { @class = "form-control", placeholder = "WorkNumber" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    @Html.TextBoxFor(m => m.CellNumber , new { @class = "form-control", placeholder = "Cell Number" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    @Html.TextAreaFor(m => m.ResidentialAddress , new { @class = "form-control", placeholder = "Residential Address" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    @Html.TextAreaFor(m => m.PostalAddress, new { @class = "form-control", placeholder = "Postal Address" })
+
+                  
+                        <input type="checkbox" onclick="disablePostalAddress()"> No Postal Address
+
+                       
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    @Html.TextAreaFor(m => m.WorkAddress, new { @class = "form-control", placeholder = "Work Address" })
+
+                        <input type="checkbox" onclick="disableWorkAddress()"> No Work Address
+
+                       
+                </div>
+            </div>
+
+
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+            
+
+
+}
+
+<br />
+<br />
+<hr />
+
+<h2>List of Clients</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.Name)</th>
+            <th>@Html.DisplayNameFor(m => m.Surname)</th>
+            <th>@Html.DisplayNameFor(m => m.Gender)</th>
+            <th>@Html.DisplayNameFor(m => m.WorkNumber)</th>
+            <th>@Html.DisplayNameFor(m => m.CellNumber)</th>
+            <th>@Html.DisplayNameFor(m => m.ResidentialAddress)</th>
+            <th>@Html.DisplayNameFor(m => m.PostalAddress)</th>
+            <th>@Html.DisplayNameFor(m => m.WorkAddress)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var clnt in ViewBag.clientList)
+        {
+            <tr>
+                <td>@clnt.Name </td>
+                <td>@clnt.Surname</td>
+                <td>@clnt.Gender </td>
+                <td>@clnt.WorkNumber</td>
+                <td>@clnt.CellNumber </td>
+                <td>@clnt.ResidentialAddress</td>
+                <td>@clnt.PostalAddress</td>
+                <td>@clnt.WorkAddress</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("GetExcelFile", "Home")">Download to Excel</a>
